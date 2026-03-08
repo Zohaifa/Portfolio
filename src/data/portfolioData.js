@@ -1,9 +1,14 @@
+import profilePic from '../assets/profile-pic.jpeg';
+import grievanceImg from '../assets/grievance.png';
+import ghordokanImg from '../assets/ghordokan.png';
+import reactSvg from '../assets/react.svg';
+
 export const portfolioData = {
   personal: {
     name: 'Abu Zohaifa',
     role: 'Full Stack Developer',
     Age: '25',
-    profileImage: '/src/assets/profile-pic.jpeg',
+    profileImage: profilePic,
   },
   contact: {
     email: 'abuzohaifa@gmail.com',
@@ -76,7 +81,7 @@ export const portfolioData = {
         description:
           'A social media style platform for students to share their grievance',
         tags: ['React', 'Express.js', 'PostgreSQL', 'Node.js'],
-        image: '/src/assets/grievance.png',
+        image: grievanceImg,
         link: 'https://project-grievance.vercel.app/',
       },
       {
@@ -94,12 +99,12 @@ export const portfolioData = {
         description:
           'A basic e-commerce app for my father to sell his product',
         tags: ['React', 'Supabase'],
-        image: '/src/assets/ghordokan.png',
+        image: ghordokanImg,
         link: 'https://www.ghordokan.com',
       },
     ],
   },
-  defaultProjectImage: '/src/assets/react.svg',
+  defaultProjectImage: reactSvg,
   others: {
     educationTitle: 'Education',
     achievementsTitle: 'Achievements',
