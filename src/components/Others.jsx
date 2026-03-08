@@ -1,5 +1,5 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../data/portfolioData.js';
 
 const AchievementIcon = ({ type }) => {
   if (type === 'award') {
@@ -101,10 +101,10 @@ const Others = () => {
                       </p>
                       <p className="text-gray-400 text-sm">
                         {achievement.description}
-                                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                       </p>
                     </div>
                   </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                 </div>
               ))}
             </div>

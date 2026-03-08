@@ -1,5 +1,5 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../data/portfolioData.js';
 
 const ContactIcon = ({ type }) => {
   if (type === 'email') {
@@ -65,14 +65,25 @@ const Hero = () => {
       'px-6 py-3 border-2 border-sky-500 text-sky-400 rounded-lg font-semibold hover:bg-sky-500/10 transition-all duration-300',
   };
 
+  const handleScrollToProjects = () => {
+    const projectsSection = document.getElementById('featured-projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-sky-400 to-blue-600 rounded-full flex items-center justify-center text-3xl font-bold">
-                AZ
+              <div className="overflow-hidden transition-all duration-300 rounded-full group-hover:rounded-lg h-24 w-24">
+                <img
+                  src={personal.profileImage}
+                  alt={personal.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
@@ -99,11 +110,11 @@ const Hero = () => {
                 {socialLinks.map((social) => (
                   <a key={social.type} href={social.url} className="text-gray-300 hover:text-sky-400 transition-colors">
                     <SocialIcon type={social.type} />
-                              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                   </a>
                 ))}
               </div>
             </div>
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
           </div>
 
           <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
@@ -117,12 +128,22 @@ const Hero = () => {
             ))}
             <div className="mt-6 flex gap-4">
               {bio.buttons.map((button) => (
-                <a key={button.label} href={button.href} className={buttonClassNames[button.variant]}>
+                <a
+                  key={button.label}
+                  href={button.href}
+                  onClick={(e) => {
+                    if (button.label === 'View Projects') {
+                      e.preventDefault();
+                      handleScrollToProjects();
+                    }
+                  }}
+                  className={buttonClassNames[button.variant]}
+                >
                   {button.label}
-                            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                 </a>
               ))}
             </div>
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
           </div>
         </div>
       </div>

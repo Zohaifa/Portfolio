@@ -2,7 +2,8 @@ export const portfolioData = {
   personal: {
     name: 'Abu Zohaifa',
     role: 'Full Stack Developer',
-    Age: '25'
+    Age: '25',
+    profileImage: '/src/assets/profile-pic.jpeg',
   },
   contact: {
     email: 'abuzohaifa@gmail.com',
@@ -75,7 +76,7 @@ export const portfolioData = {
         description:
           'A social media style platform for students to share their grievance',
         tags: ['React', 'Express.js', 'PostgreSQL', 'Node.js'],
-        image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop',
+        image: '/src/assets/grievance.png',
         link: 'https://project-grievance.vercel.app/',
       },
       {
@@ -84,7 +85,7 @@ export const portfolioData = {
         description:
           'A system for students to book tickets for bus the night before to avoid extra bus allocation and save cost',
         tags: ['React', 'AppWrite'],
-        image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop',
+        image: null,
         link: 'https://tmd-system-iiuc.vercel.app/',
       },
       {
@@ -93,11 +94,12 @@ export const portfolioData = {
         description:
           'A basic e-commerce app for my father to sell his product',
         tags: ['React', 'Supabase'],
-        image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop',
+        image: '/src/assets/ghordokan.png',
         link: 'https://www.ghordokan.com',
       },
     ],
   },
+  defaultProjectImage: '/src/assets/react.svg',
   others: {
     educationTitle: 'Education',
     achievementsTitle: 'Achievements',

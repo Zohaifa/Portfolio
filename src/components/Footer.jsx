@@ -1,5 +1,5 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { portfolioData } from '../data/portfolioData.js';
 
 const ContactIcon = ({ type }) => {
   if (type === 'email') {
@@ -52,10 +52,27 @@ const SocialIcon = ({ type }) => {
 
 const Footer = () => {
   const { footer, contact, socialLinks, personal } = portfolioData;
+  const footerSection = footer ?? {};
+  const contactCards = footerSection.contactCards ?? [];
+  const form = footerSection.form ?? {
+    title: 'Send a Message',
+    name: { label: 'Your Name', placeholder: 'Enter your name' },
+    email: { label: 'Email Address', placeholder: 'Enter your email' },
+    subject: { label: 'Subject', placeholder: 'Enter subject' },
+    message: { label: 'Message', placeholder: 'Enter your message', rows: 5 },
+    submitText: 'Send Message',
+  };
+
   const cardValues = {
-    email: { value: contact.email, href: `mailto:${contact.email}` },
-    phone: { value: contact.phoneNum, href: `tel:${contact.phoneNum}` },
-    location: { value: contact.location },
+    email: {
+      value: contact?.email ?? 'Not provided',
+      href: contact?.email ? `mailto:${contact.email}` : undefined,
+    },
+    phone: {
+      value: contact?.phoneNum ?? 'Not provided',
+      href: contact?.phoneNum ? `tel:${contact.phoneNum}` : undefined,
+    },
+    location: { value: contact?.location ?? 'Not provided' },
   };
 
   return (
@@ -64,15 +81,15 @@ const Footer = () => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
-              {footer.title}
+              {footerSection.title ?? "Let's Connect"}
             </span>
           </h2>
-          <p className="text-gray-400 text-lg">{footer.subtitle}</p>
+          <p className="text-gray-400 text-lg">{footerSection.subtitle ?? "Have a project in mind? Let's work together!"}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {footer.contactCards.map((card) => {
-            const details = cardValues[card.type];
+          {contactCards.map((card) => {
+            const details = cardValues[card.type] ?? { value: 'Not provided' };
 
             return (
               <div key={card.type} className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20">
@@ -99,48 +116,48 @@ const Footer = () => {
 
         <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 mb-12 max-w-3xl mx-auto">
           <h3 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
-            {footer.form.title}
+            {form.title}
           </h3>
           <form className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-300 mb-2 text-sm font-medium">{footer.form.name.label}</label>
+                <label className="block text-gray-300 mb-2 text-sm font-medium">{form.name.label}</label>
                 <input
                   type="text"
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
-                  placeholder={footer.form.name.placeholder}
+                  placeholder={form.name.placeholder}
                 />
               </div>
               <div>
-                <label className="block text-gray-300 mb-2 text-sm font-medium">{footer.form.email.label}</label>
+                <label className="block text-gray-300 mb-2 text-sm font-medium">{form.email.label}</label>
                 <input
                   type="email"
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
-                  placeholder={footer.form.email.placeholder}
+                  placeholder={form.email.placeholder}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-gray-300 mb-2 text-sm font-medium">{footer.form.subject.label}</label>
+              <label className="block text-gray-300 mb-2 text-sm font-medium">{form.subject.label}</label>
               <input
                 type="text"
                 className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
-                placeholder={footer.form.subject.placeholder}
+                placeholder={form.subject.placeholder}
               />
             </div>
             <div>
-              <label className="block text-gray-300 mb-2 text-sm font-medium">{footer.form.message.label}</label>
+              <label className="block text-gray-300 mb-2 text-sm font-medium">{form.message.label}</label>
               <textarea
-                rows={footer.form.message.rows}
+                rows={form.message.rows}
                 className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all resize-none"
-                placeholder={footer.form.message.placeholder}
+                placeholder={form.message.placeholder}
               />
             </div>
             <button
               type="submit"
               className="w-full px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg font-semibold hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-sky-500/50"
             >
-              {footer.form.submitText}
+              {form.submitText}
             </button>
           </form>
         </div>
