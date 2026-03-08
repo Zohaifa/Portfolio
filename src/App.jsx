@@ -7,7 +7,7 @@ import './App.css'
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <div id="portfolio-content" className="min-h-screen">
       <Hero />
       <Skills />
       <Projects />

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import jsPDF from 'jspdf';
 import { portfolioData } from '../data/portfolioData.js';
 
 const ContactIcon = ({ type }) => {
@@ -52,6 +53,7 @@ const SocialIcon = ({ type }) => {
 
 const Hero = () => {
   const { personal, contact, socialLinks, bio } = portfolioData;
+  const [isGeneratingCv, setIsGeneratingCv] = useState(false);
   const contactItems = [
     { type: 'email', value: contact.email, href: `mailto:${contact.email}` },
     { type: 'phone', value: contact.phoneNum, href: `tel:${contact.phoneNum}` },
@@ -72,20 +74,170 @@ const Hero = () => {
     }
   };
 
+  const handleDownloadCv = async (event) => {
+    event.preventDefault();
+
+    if (isGeneratingCv) {
+      return;
+    }
+
+    setIsGeneratingCv(true);
+
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let yPosition = 20;
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const margin = 15;
+      const contentWidth = pageWidth - 2 * margin;
+
+      // Utility functions
+      const setFont = (size, weight = 'normal', color = '#000000') => {
+        pdf.setFontSize(size);
+        pdf.setFont('helvetica', weight);
+        const [r, g, b] = color.match(/\w\w/g).map(x => parseInt(x, 16));
+        pdf.setTextColor(r, g, b);
+      };
+
+      const addText = (text, x, y, options = {}) => {
+        const { maxWidth = contentWidth, align = 'left', fontSize = 12, color = '#000000', weight = 'normal' } = options;
+        setFont(fontSize, weight, color);
+        pdf.text(text, x, y, { maxWidth, align });
+      };
+
+      const checkNewPage = (neededHeight) => {
+        if (yPosition + neededHeight > 270) {
+          pdf.addPage();
+          yPosition = 20;
+        }
+      };
+
+      // Header with name and role
+      addText(personal.name, margin, yPosition, { fontSize: 24, weight: 'bold', color: '#0ea5e9' });
+      yPosition += 8;
+      addText(personal.role, margin, yPosition, { fontSize: 14, color: '#333333' });
+      yPosition += 10;
+
+      // Contact info
+      const contactInfo = [contact.email, contact.phoneNum, contact.location].join(' • ');
+      setFont(10, 'normal', '#555555');
+      pdf.text(contactInfo, margin, yPosition, { maxWidth: contentWidth });
+      yPosition += 12;
+
+      // About section
+      if (bio && bio.paragraphs && bio.paragraphs.length > 0) {
+        checkNewPage(25);
+        addText('ABOUT', margin, yPosition, { fontSize: 12, weight: 'bold', color: '#0ea5e9' });
+        yPosition += 6;
+        
+        bio.paragraphs.forEach((para) => {
+          checkNewPage(10);
+          const lines = pdf.splitTextToSize(para, contentWidth);
+          setFont(10, 'normal', '#333333');
+          pdf.text(lines, margin, yPosition);
+          yPosition += lines.length * 4 + 3;
+        });
+        yPosition += 3;
+      }
+
+      // Skills section
+      if (portfolioData.skills && portfolioData.skills.blocks) {
+        portfolioData.skills.blocks.forEach((block) => {
+          checkNewPage(25);
+          addText(block.title.toUpperCase(), margin, yPosition, { fontSize: 11, weight: 'bold', color: '#0ea5e9' });
+          yPosition += 5;
+
+          block.items.forEach((skill) => {
+            checkNewPage(5);
+            setFont(10, 'normal', '#333333');
+            pdf.text(`• ${skill.name}`, margin + 2, yPosition);
+            yPosition += 4;
+          });
+          yPosition += 3;
+        });
+        yPosition += 3;
+      }
+
+      // Education section
+      if (portfolioData.others && portfolioData.others.education) {
+        checkNewPage(20);
+        addText('EDUCATION', margin, yPosition, { fontSize: 12, weight: 'bold', color: '#0ea5e9' });
+        yPosition += 6;
+
+        portfolioData.others.education.forEach((edu) => {
+          checkNewPage(12);
+          addText(edu.degree, margin, yPosition, { fontSize: 10, weight: 'bold', color: '#333333' });
+          yPosition += 4;
+          addText(edu.school, margin, yPosition, { fontSize: 9, color: '#555555' });
+          yPosition += 4;
+          addText(`${edu.period} • ${edu.description}`, margin, yPosition, { fontSize: 9, color: '#777777' });
+          yPosition += 5;
+        });
+        yPosition += 5;
+      }
+
+      // Projects section
+      if (portfolioData.projects && portfolioData.projects.cards) {
+        checkNewPage(20);
+        addText('PROJECTS', margin, yPosition, { fontSize: 12, weight: 'bold', color: '#0ea5e9' });
+        yPosition += 6;
+
+        portfolioData.projects.cards.forEach((project) => {
+          checkNewPage(15);
+          addText(project.title, margin, yPosition, { fontSize: 10, weight: 'bold', color: '#333333' });
+          yPosition += 4;
+          
+          const descLines = pdf.splitTextToSize(project.description, contentWidth);
+          setFont(9, 'normal', '#555555');
+          pdf.text(descLines, margin, yPosition);
+          yPosition += descLines.length * 3 + 2;
+
+          const tagsText = project.tags.join(' • ');
+          setFont(8, 'normal', '#0ea5e9');
+          pdf.text(tagsText, margin, yPosition);
+          yPosition += 4;
+        });
+        yPosition += 5;
+      }
+
+      // Achievements section
+      if (portfolioData.others && portfolioData.others.achievements && portfolioData.others.achievements.length > 0) {
+        checkNewPage(20);
+        addText('ACHIEVEMENTS', margin, yPosition, { fontSize: 12, weight: 'bold', color: '#0ea5e9' });
+        yPosition += 6;
+
+        portfolioData.others.achievements.forEach((achievement) => {
+          checkNewPage(10);
+          addText(achievement.title, margin, yPosition, { fontSize: 10, weight: 'bold', color: '#333333' });
+          yPosition += 4;
+          addText(`${achievement.organization} • ${achievement.description}`, margin, yPosition, { fontSize: 9, color: '#555555' });
+          yPosition += 5;
+        });
+      }
+
+      const fileName = `${personal.name.trim().replace(/\s+/g, '_')}_CV.pdf`;
+      pdf.save(fileName);
+    } catch (error) {
+      console.error('Unable to generate CV PDF:', error);
+      window.alert('CV generation failed. Please try again.');
+    } finally {
+      setIsGeneratingCv(false);
+    }
+  };
+
   return (
     <section className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
-            <div className="flex items-center gap-4 mb-6 group-hover:flex-col group-hover:items-center transition-all duration-300">
-              <div className="overflow-hidden transition-all duration-300 rounded-full group-hover:rounded-lg h-24 w-24 group-hover:h-40 group-hover:w-40">
+            <div className="relative mb-6 h-24 transition-all duration-500 ease-out group-hover:h-56">
+              <div className="absolute left-0 top-0 h-24 w-24 overflow-hidden rounded-full transition-all duration-500 ease-out transform-gpu group-hover:left-1/2 group-hover:-translate-x-1/2 group-hover:scale-150 group-hover:rounded-lg">
                 <img
                   src={personal.profileImage}
                   alt={personal.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div>
+              <div className="pl-28 pt-2 transition-all duration-500 ease-out group-hover:pl-0 group-hover:pt-40 group-hover:text-center">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
                   {personal.name}
                 </h1>
@@ -135,11 +287,19 @@ const Hero = () => {
                     if (button.label === 'View Projects') {
                       e.preventDefault();
                       handleScrollToProjects();
+                      return;
+                    }
+
+                    if (button.label === 'Download CV') {
+                      handleDownloadCv(e);
                     }
                   }}
-                  className={buttonClassNames[button.variant]}
+                  className={`${buttonClassNames[button.variant]} ${
+                    button.label === 'Download CV' && isGeneratingCv ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
+                  aria-disabled={button.label === 'Download CV' && isGeneratingCv}
                 >
-                  {button.label}
+                  {button.label === 'Download CV' && isGeneratingCv ? 'Generating PDF...' : button.label}
                 </a>
               ))}
             </div>
