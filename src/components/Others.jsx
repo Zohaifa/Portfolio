@@ -56,7 +56,7 @@ const Others = () => {
               {others.education.map((edu, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20"
+                  className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[200px] hover:max-h-[400px]"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="text-xl font-bold text-white">{edu.degree}</h3>
@@ -66,6 +66,7 @@ const Others = () => {
                   </div>
                   <p className="text-sky-400 font-medium mb-2">{edu.school}</p>
                   <p className="text-gray-400 text-sm">{edu.description}</p>
+                                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                 </div>
               ))}
             </div>
@@ -85,7 +86,7 @@ const Others = () => {
               {others.achievements.map((achievement, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20"
+                  className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[180px] hover:max-h-[400px]"
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center text-white">
@@ -100,6 +101,7 @@ const Others = () => {
                       </p>
                       <p className="text-gray-400 text-sm">
                         {achievement.description}
+                                        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                       </p>
                     </div>
                   </div>

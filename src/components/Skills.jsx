@@ -26,7 +26,7 @@ const SkillIcon = ({ type }) => {
 };
 
 const SkillCard = ({ title, skillItems, icon }) => (
-  <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20">
+  <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[400px] hover:max-h-[800px]">
     <div className="flex items-center gap-3 mb-6">
       {icon}
       <h3 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
@@ -48,6 +48,7 @@ const SkillCard = ({ title, skillItems, icon }) => (
           </div>
         </div>
       ))}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
     </div>
   </div>
 );

@@ -20,7 +20,7 @@ const Projects = () => {
           {projects.cards.map((project) => (
             <div
               key={project.id}
-              className="group bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 hover:-translate-y-2"
+              className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 max-h-[500px] hover:max-h-[800px] overflow-hidden"
             >
               <div className="relative overflow-hidden h-48 bg-gray-700">
                 <img
@@ -35,7 +35,7 @@ const Projects = () => {
                 <h3 className="text-xl font-bold mb-2 text-white group-hover:text-sky-400 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-400 text-sm mb-4">
                   {project.description}
                 </p>
                 
@@ -59,6 +59,7 @@ const Projects = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </a>
+                            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
               </div>
             </div>
           ))}

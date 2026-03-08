@@ -54,7 +54,7 @@ const Hero = () => {
   const { personal, contact, socialLinks, bio } = portfolioData;
   const contactItems = [
     { type: 'email', value: contact.email, href: `mailto:${contact.email}` },
-    { type: 'phone', value: contact.phoneDisplay, href: `tel:${contact.phoneRaw}` },
+    { type: 'phone', value: contact.phoneNum, href: `tel:${contact.phoneNum}` },
     { type: 'location', value: contact.location },
   ];
 
@@ -69,10 +69,10 @@ const Hero = () => {
     <section className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-start">
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20">
+          <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-24 h-24 bg-gradient-to-br from-sky-400 to-blue-600 rounded-full flex items-center justify-center text-3xl font-bold">
-                {personal.initials}
+                AZ
               </div>
               <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
@@ -99,13 +99,14 @@ const Hero = () => {
                 {socialLinks.map((social) => (
                   <a key={social.type} href={social.url} className="text-gray-300 hover:text-sky-400 transition-colors">
                     <SocialIcon type={social.type} />
+                              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20">
+          <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
             <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
               {bio.title}
             </h2>
@@ -118,6 +119,7 @@ const Hero = () => {
               {bio.buttons.map((button) => (
                 <a key={button.label} href={button.href} className={buttonClassNames[button.variant]}>
                   {button.label}
+                            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none group-hover:opacity-0 transition-opacity duration-300" />
                 </a>
               ))}
             </div>

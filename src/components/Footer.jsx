@@ -54,7 +54,7 @@ const Footer = () => {
   const { footer, contact, socialLinks, personal } = portfolioData;
   const cardValues = {
     email: { value: contact.email, href: `mailto:${contact.email}` },
-    phone: { value: contact.phoneDisplay, href: `tel:${contact.phoneRaw}` },
+    phone: { value: contact.phoneNum, href: `tel:${contact.phoneNum}` },
     location: { value: contact.location },
   };
 
