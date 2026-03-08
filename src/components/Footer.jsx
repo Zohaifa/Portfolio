@@ -118,22 +118,26 @@ const Footer = () => {
           <h3 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-sky-400 to-blue-600 bg-clip-text text-transparent">
             {form.title}
           </h3>
-          <form className="space-y-4">
+          <form method="POST" action="https://formsubmit.co/abuzohaifa@gmail.com" className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-gray-300 mb-2 text-sm font-medium">{form.name.label}</label>
                 <input
                   type="text"
+                  name="Name"
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
                   placeholder={form.name.placeholder}
+                  required
                 />
               </div>
               <div>
                 <label className="block text-gray-300 mb-2 text-sm font-medium">{form.email.label}</label>
                 <input
                   type="email"
+                  name="Email"
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
                   placeholder={form.email.placeholder}
+                  required
                 />
               </div>
             </div>
@@ -141,6 +145,7 @@ const Footer = () => {
               <label className="block text-gray-300 mb-2 text-sm font-medium">{form.subject.label}</label>
               <input
                 type="text"
+                name="Subject"
                 className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all"
                 placeholder={form.subject.placeholder}
               />
@@ -148,9 +153,11 @@ const Footer = () => {
             <div>
               <label className="block text-gray-300 mb-2 text-sm font-medium">{form.message.label}</label>
               <textarea
+                name="Message"
                 rows={form.message.rows}
                 className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 text-white transition-all resize-none"
                 placeholder={form.message.placeholder}
+                required
               />
             </div>
             <button

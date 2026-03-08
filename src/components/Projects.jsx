@@ -29,7 +29,7 @@ const Projects = () => {
               key={project.id}
               className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 max-h-[500px] hover:max-h-[800px] overflow-hidden"
             >
-              <div className="relative overflow-hidden h-48 bg-gray-700">
+              <div className="relative overflow-hidden h-48 group-hover:h-72 bg-gray-700 transition-all duration-300">
                 <img
                   src={project.image || defaultProjectImage}
                   alt={project.title}

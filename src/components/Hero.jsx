@@ -77,8 +77,8 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-lg border border-sky-500/30 hover:border-sky-500 transition-all duration-300 shadow-lg hover:shadow-sky-500/20 overflow-hidden max-h-[350px] hover:max-h-[600px]">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="overflow-hidden transition-all duration-300 rounded-full group-hover:rounded-lg h-24 w-24">
+            <div className="flex items-center gap-4 mb-6 group-hover:flex-col group-hover:items-center transition-all duration-300">
+              <div className="overflow-hidden transition-all duration-300 rounded-full group-hover:rounded-lg h-24 w-24 group-hover:h-40 group-hover:w-40">
                 <img
                   src={personal.profileImage}
                   alt={personal.name}
